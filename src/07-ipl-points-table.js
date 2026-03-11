@@ -38,4 +38,23 @@
  */
 export function iplPointsTable(matches) {
   // Your code here
+  if (!Array.isArray(matches)) {
+    return []
+  }
+  const results = []
+  for (const item of matches) {
+    if (item.result === "tie" || item.result === "no_result") {
+      if (!results.includes(() => team == matches.team1)) {
+        results.push({ "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": "DC", "tied": 1, "won": 0 }, { "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": matches.team1, "tied": 1, "won": 0 })
+      } else {
+        results.find(){ "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": "DC", "tied": 1, "won": 0 }, { "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": matches.team2, "tied": 1, "won": 0 }
+      }
+      if (!results.includes(() => team == matches.team2)) {
+        results.push({ "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": "DC", "tied": 1, "won": 0 }, { "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": matches.team2, "tied": 1, "won": 0 })
+      }
+
+    }
+
+  }
+
 }

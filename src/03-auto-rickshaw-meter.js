@@ -1,3 +1,4 @@
+
 /**
  * 🛺 Pappu ka Auto Rickshaw Meter (Mumbai Style)
  *
@@ -33,4 +34,20 @@
  */
 export function calculateAutoFare(distance, waitingMinutes = 0) {
   // Your code here
+  if (typeof distance !== "number" || distance <= 0 || typeof waitingMinutes !== "number" || waitingMinutes < 0) {
+    return -1;
+  }
+  let fare = 0;
+  let dist = 0;
+  while (dist < Math.ceil(distance)) {
+    if (dist < 1) {
+      fare += 30;
+    } else if (dist < 5) {
+      fare += 15;
+    } else {
+      fare += 10;
+    }
+    dist += 1;
+  }
+  return fare + Math.ceil(waitingMinutes / 2) * 5
 }
