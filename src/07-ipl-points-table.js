@@ -38,23 +38,48 @@
  */
 export function iplPointsTable(matches) {
   // Your code here
-  if (!Array.isArray(matches)) {
-    return []
-  }
-  const results = []
-  for (const item of matches) {
-    if (item.result === "tie" || item.result === "no_result") {
-      if (!results.includes(() => team == matches.team1)) {
-        results.push({ "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": "DC", "tied": 1, "won": 0 }, { "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": matches.team1, "tied": 1, "won": 0 })
-      } else {
-        results.find(){ "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": "DC", "tied": 1, "won": 0 }, { "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": matches.team2, "tied": 1, "won": 0 }
+  if (Array.isArray(matches)) {
+    const table = {}
+    for (const match of matches) {
+      const { team1, team2, result, winner } = match
+
+      if (!table[team1]) {
+        table[team1] = { team: team1, played: 0, won: 0, lost: 0, tied: 0, noResult: 0, points: 0 }
       }
-      if (!results.includes(() => team == matches.team2)) {
-        results.push({ "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": "DC", "tied": 1, "won": 0 }, { "lost": 0, "noResult": 0, "played": 1, "points": 1, "team": matches.team2, "tied": 1, "won": 0 })
+      if (!table[team2]) {
+        table[team2] = { team: team2, played: 0, won: 0, lost: 0, tied: 0, noResult: 0, points: 0 }
       }
 
+      table[team1].played++
+      table[team2].played++
+
+      switch (result) {
+        case "win":
+          if (winner === team1) {
+            table[team1].won++
+            table[team1].points += 2
+            table[team2].lost++
+          } else {
+            table[team2].won++
+            table[team2].points += 2
+            table[team1].lost++
+          }
+          break
+        case "tie":
+          table[team1].tied++
+          table[team1].points++
+          table[team2].tied++
+          table[team2].points++
+          break
+        case "no_result":
+          table[team1].noResult++
+          table[team1].points++
+          table[team2].noResult++
+          table[team2].points++
+          break
+      }
     }
-
+    return Object.values(table).sort((a, b) => b.points - a.points || a.team.localeCompare(b.team))
   }
-
+  return []
 }
